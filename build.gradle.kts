@@ -1,9 +1,15 @@
+import net.ltgt.gradle.errorprone.CheckSeverity
 import net.ltgt.gradle.errorprone.errorprone
+
+val codeCoverageThreshold = "0.85".toBigDecimal()
 
 plugins {
 	java
 	id("org.springframework.boot") version "3.3.1"
 	id("io.spring.dependency-management") version "1.1.5"
+
+	// Code Coverage
+	jacoco
 
 	// Code formatter
 	id("com.palantir.git-version") version "3.1.0"
@@ -38,10 +44,33 @@ dependencies {
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
 	errorprone("com.google.errorprone:error_prone_core:2.28.0")
+	errorprone("com.uber.nullaway:nullaway:0.11.0")
+}
+
+// Code Coverage
+tasks.test {
+	finalizedBy(tasks.jacocoTestReport)
+}
+
+tasks.jacocoTestReport {
+	dependsOn(tasks.test)
+}
+
+tasks.jacocoTestCoverageVerification {
+	violationRules {
+		rule {
+			limit {
+				minimum = codeCoverageThreshold
+			}
+		}
+	}
+}
+
+tasks.named("check") {
+	dependsOn (tasks.jacocoTestCoverageVerification)
 }
 
 // Code Formatter
-
 configure<com.diffplug.gradle.spotless.SpotlessExtension> {
 	java {
 		importOrder()
@@ -54,6 +83,11 @@ configure<com.diffplug.gradle.spotless.SpotlessExtension> {
 // Static Code Analyzer
 tasks.withType<JavaCompile>().configureEach {
 	options.errorprone.disableWarningsInGeneratedCode.set(true)
+	options.errorprone {
+		check("NullAway", CheckSeverity.ERROR)
+		option("NullAway:AnnotatedPackages", "com.fbm.lazhcsilva")
+	}
+	finalizedBy(tasks.spotlessApply)
 }
 
 pmd {
