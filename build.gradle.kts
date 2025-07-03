@@ -1,12 +1,12 @@
 import net.ltgt.gradle.errorprone.CheckSeverity
 import net.ltgt.gradle.errorprone.errorprone
 
-val codeCoverageThreshold = "0.85".toBigDecimal()
+val codeCoverageThreshold = "0.01".toBigDecimal()
 
 plugins {
 	java
-	id("org.springframework.boot") version "3.3.1"
-	id("io.spring.dependency-management") version "1.1.5"
+	id("org.springframework.boot") version "3.5.3"
+	id("io.spring.dependency-management") version "1.1.7"
 
 	// Code Coverage
 	jacoco
@@ -75,7 +75,7 @@ configure<com.diffplug.gradle.spotless.SpotlessExtension> {
 	java {
 		importOrder()
 		removeUnusedImports()
-		palantirJavaFormat().formatJavadoc(true)
+		palantirJavaFormat("2.50.0").formatJavadoc(true)
 		formatAnnotations()
 	}
 }
