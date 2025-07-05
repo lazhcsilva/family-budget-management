@@ -1,4 +1,4 @@
-package com.fbm.lazhcsilva.infrastructure.controller;
+package com.fbm.lazhcsilva.infrastructure.controller.user;
 
 import com.fbm.lazhcsilva.domain.user.model.User;
 import com.fbm.lazhcsilva.domain.user.service.UserService;
