@@ -1,5 +1,6 @@
-package com.fbm.lazhcsilva.domain.user;
+package com.fbm.lazhcsilva.domain.user.service.impl;
 
+import com.fbm.lazhcsilva.infrastructure.dto.user.UserDTO;
 import com.fbm.lazhcsilva.domain.user.model.User;
 import com.fbm.lazhcsilva.domain.user.repository.UserRepository;
 import com.fbm.lazhcsilva.domain.user.service.UserService;

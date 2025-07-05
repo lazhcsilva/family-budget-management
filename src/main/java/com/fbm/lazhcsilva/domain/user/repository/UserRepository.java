@@ -1,4 +1,4 @@
-package com.fbm.lazhcsilva.domain.user;
+package com.fbm.lazhcsilva.domain.user.repository;
 
 import java.util.Optional;
 
