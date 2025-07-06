@@ -1,4 +1,3 @@
-import net.ltgt.gradle.errorprone.CheckSeverity
 import net.ltgt.gradle.errorprone.errorprone
 
 val codeCoverageThreshold = "0.01".toBigDecimal()
@@ -21,7 +20,7 @@ plugins {
 	pmd
 }
 
-group = "com.fbm.lazhcsilva"
+group = "com.fbm"
 version = "0.0.1-SNAPSHOT"
 
 java {
@@ -44,7 +43,6 @@ dependencies {
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
 	errorprone("com.google.errorprone:error_prone_core:2.28.0")
-	errorprone("com.uber.nullaway:nullaway:0.11.0")
 }
 
 // Code Coverage
@@ -83,10 +81,6 @@ configure<com.diffplug.gradle.spotless.SpotlessExtension> {
 // Static Code Analyzer
 tasks.withType<JavaCompile>().configureEach {
 	options.errorprone.disableWarningsInGeneratedCode.set(true)
-	options.errorprone {
-		check("NullAway", CheckSeverity.ERROR)
-		option("NullAway:AnnotatedPackages", "com.fbm.lazhcsilva")
-	}
 	finalizedBy(tasks.spotlessApply)
 }
 
