@@ -1,7 +1,6 @@
 package com.fbm.user;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 import com.fbm.user.model.User;
@@ -39,5 +38,17 @@ public class UserServiceTest {
                 actualUsers.size(),
                 "The size of the returned list should match the expected size.");
         assertEquals(expectedUsers, actualUsers, "The returned users should match the expected users.");
+    }
+
+    @Test
+    void searchUserById() {
+        User user1 = new User(1234567890123L, "Jose", "Santos", "jose@exemplo.com", "123456");
+        assertEquals(1234567890123L, user1.getId());
+    }
+
+    @Test
+    void searchWrongUserById() {
+        User user1 = new User(1234567890123L, "Jose", "Santos", "jose@exemplo.com", "123456");
+        assertNotEquals(27, user1.getId());
     }
 }
