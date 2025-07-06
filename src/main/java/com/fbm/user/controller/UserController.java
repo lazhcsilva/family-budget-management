@@ -1,7 +1,7 @@
-package com.fbm.lazhcsilva.infrastructure.controller.user;
+package com.fbm.user.controller;
 
-import com.fbm.lazhcsilva.domain.user.model.User;
-import com.fbm.lazhcsilva.domain.user.service.UserService;
+import com.fbm.user.model.User;
+import com.fbm.user.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

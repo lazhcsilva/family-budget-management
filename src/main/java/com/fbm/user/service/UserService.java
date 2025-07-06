@@ -1,7 +1,7 @@
-package com.fbm.lazhcsilva.domain.user.service;
+package com.fbm.user.service;
 
-import com.fbm.lazhcsilva.domain.user.model.User;
-import com.fbm.lazhcsilva.infrastructure.dto.user.UserDTO;
+import com.fbm.user.dto.UserDTO;
+import com.fbm.user.model.User;
 
 import java.util.List;
 
