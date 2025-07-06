@@ -6,15 +6,19 @@ import com.fbm.user.repository.UserRepository;
 import com.fbm.user.service.UserService;
 import java.util.List;
 import java.util.Optional;
+
+import com.fbm.user.service.UserValidator;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final UserValidator userValidator;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, UserValidator userValidator) {
         this.userRepository = userRepository;
+        this.userValidator = userValidator;
     }
 
     @Override
@@ -39,8 +43,11 @@ public class UserServiceImpl implements UserService {
                 || user.getEmail() == null
                 || user.getPassword() == null) {
             throw new BusinessException("You must fill in all fields");
+        } else if (userValidator.isValidEmail(user.getEmail())) {
+            throw new BusinessException("Invalid email");
+        } else {
+            userRepository.save(user);
         }
-        userRepository.save(user);
     }
 
     @Override
@@ -48,7 +55,16 @@ public class UserServiceImpl implements UserService {
         Optional<User> userDb = userRepository.findById(id);
         if (userDb.isEmpty()) {
             throw new BusinessException("Id not found");
+        } else if (userValidator.isValidEmail(user.getEmail())) {
+            throw new BusinessException("Invalid email");
+        } else {
+            userRepository.save(user);
         }
-        userRepository.save(user);
+    }
+
+    @Override
+    public void delete(Long id) {
+        User user = findById(id);
+        userRepository.delete(user);
     }
 }

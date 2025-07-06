@@ -74,7 +74,7 @@ public class UserServiceTest {
     }
 
     @Test
-    void updateFirstNameUser() {
+    void updateUser() {
         Long id = 1L;
         User existingUser = new User(id, "Jose", "Santos", "jose@exemplo.com", "123456");
         User updatedUser = new User(id, "Maria", "Santos", "jose@exemplo.com", "123456");
@@ -106,4 +106,5 @@ public class UserServiceTest {
                 },
                 "Should throw BusinessException when ID is not found");
     }
+
 }
