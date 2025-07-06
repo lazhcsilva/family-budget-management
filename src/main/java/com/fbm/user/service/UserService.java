@@ -9,4 +9,6 @@ public interface UserService {
     User findById(Long id);
 
     void insert(User user);
+
+    void update(Long id, User user);
 }

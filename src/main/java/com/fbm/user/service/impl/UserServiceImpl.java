@@ -42,4 +42,13 @@ public class UserServiceImpl implements UserService {
         }
         userRepository.save(user);
     }
+
+    @Override
+    public void update(Long id, User user) {
+        Optional<User> userDb = userRepository.findById(id);
+        if (userDb.isEmpty()) {
+            throw new BusinessException("Id not found");
+        }
+        userRepository.save(user);
+    }
 }

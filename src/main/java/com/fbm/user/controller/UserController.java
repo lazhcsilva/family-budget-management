@@ -35,4 +35,11 @@ public class UserController {
         userService.insert(user);
         return ResponseEntity.ok(user);
     }
+
+    @Operation(summary = "Update user")
+    @PutMapping("/{id}")
+    public ResponseEntity<User> update(@PathVariable Long id, @RequestBody User user) {
+        userService.update(id, user);
+        return ResponseEntity.ok(user);
+    }
 }
