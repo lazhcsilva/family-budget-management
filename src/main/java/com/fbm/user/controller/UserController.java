@@ -2,11 +2,10 @@ package com.fbm.user.controller;
 
 import com.fbm.user.model.User;
 import com.fbm.user.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user")
@@ -18,13 +17,22 @@ public class UserController {
         this.userService = userService;
     }
 
+    @Operation(summary = "Get all users")
     @GetMapping
     public ResponseEntity<List<User>> findAll() {
         return ResponseEntity.ok(userService.getAll());
     }
 
+    @Operation(summary = "Get user by ID")
     @GetMapping("/{id}")
     public ResponseEntity<User> findById(Long id) {
         return ResponseEntity.ok(userService.findById(id));
+    }
+
+    @Operation(summary = "Insert User")
+    @PostMapping
+    public ResponseEntity<User> insertUser(@RequestBody User user) {
+        userService.insert(user);
+        return ResponseEntity.ok(user);
     }
 }

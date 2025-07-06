@@ -31,4 +31,15 @@ public class UserServiceImpl implements UserService {
         Optional<User> user = userRepository.findById(id);
         return user.orElseThrow(() -> new BusinessException("Id not found"));
     }
+
+    @Override
+    public void insert(User user) {
+        if (user.getFirstName() == null
+                || user.getLastName() == null
+                || user.getEmail() == null
+                || user.getPassword() == null) {
+            throw new BusinessException("You must fill in all fields");
+        }
+        userRepository.save(user);
+    }
 }
