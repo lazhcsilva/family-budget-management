@@ -1,8 +1,8 @@
-package com.fbm.lazhcsilva.domain.user.repository;
+package com.fbm.user.repository;
 
 import java.util.Optional;
 
-import com.fbm.lazhcsilva.domain.user.model.User;
+import com.fbm.user.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

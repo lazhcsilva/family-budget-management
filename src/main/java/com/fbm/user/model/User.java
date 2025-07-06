@@ -1,4 +1,4 @@
-package com.fbm.lazhcsilva.domain.user.model;
+package com.fbm.user.model;
 
 import jakarta.persistence.*;
 
