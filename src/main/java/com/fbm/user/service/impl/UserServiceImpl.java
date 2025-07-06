@@ -22,6 +22,6 @@ public class UserServiceImpl implements UserService {
         if (users.isEmpty()) {
             throw new BusinessException("No users saved.");
         }
-        return List.of();
+        return users;
     }
 }
