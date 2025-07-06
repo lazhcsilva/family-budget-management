@@ -22,4 +22,9 @@ public class UserController {
     public ResponseEntity<List<User>> findAll() {
         return ResponseEntity.ok(userService.getAll());
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<User> findById(Long id) {
+        return ResponseEntity.ok(userService.findById(id));
+    }
 }

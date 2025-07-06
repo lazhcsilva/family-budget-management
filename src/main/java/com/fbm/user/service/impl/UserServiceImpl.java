@@ -5,6 +5,7 @@ import com.fbm.user.model.User;
 import com.fbm.user.repository.UserRepository;
 import com.fbm.user.service.UserService;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -23,5 +24,11 @@ public class UserServiceImpl implements UserService {
             throw new BusinessException("No users saved.");
         }
         return users;
+    }
+
+    @Override
+    public User findById(Long id) {
+        Optional<User> user = userRepository.findById(id);
+        return user.orElseThrow(() -> new BusinessException("Id not found"));
     }
 }
