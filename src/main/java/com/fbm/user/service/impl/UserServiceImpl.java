@@ -5,10 +5,11 @@ import com.fbm.user.model.User;
 import com.fbm.user.repository.UserRepository;
 import com.fbm.user.service.UserService;
 import com.fbm.user.service.UserValidator;
+import org.springframework.stereotype.Service;
+
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Optional;
-import org.springframework.stereotype.Service;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -38,11 +39,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findByEmail(String email) {
-        User user = userRepository.findByUserEmail(email);
-        if (user == null) {
-            throw new BusinessException("No users found with this email.");
+        try {
+            User user = userRepository.findByUserEmail(email);
+            if (user != null) {
+                return user;
+            } else {
+                throw new BusinessException("Email not found");
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to retrieve user: " + e.getMessage(), e);
         }
-        return user;
     }
 
     @Override

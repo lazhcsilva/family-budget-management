@@ -30,6 +30,12 @@ public class UserController {
         return ResponseEntity.ok(userService.findById(id));
     }
 
+    @Operation(summary = "Get user by email")
+    @GetMapping("/email/{email}")
+    public ResponseEntity<User> findByEmail(@PathVariable String email) {
+        return ResponseEntity.ok(userService.findByEmail(email));
+    }
+
     @Operation(summary = "Insert User")
     @PostMapping
     public ResponseEntity<User> insertUser(@RequestBody User user) throws NoSuchAlgorithmException {
