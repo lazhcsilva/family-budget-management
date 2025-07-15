@@ -5,6 +5,7 @@ import com.fbm.user.model.User;
 import com.fbm.user.repository.UserRepository;
 import com.fbm.user.service.UserService;
 import com.fbm.user.service.UserValidator;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
@@ -45,7 +46,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void insert(User user) {
+    public void insert(User user) throws NoSuchAlgorithmException {
         if (user.getFirstName() == null
                 || user.getLastName() == null
                 || user.getEmail() == null
@@ -60,6 +61,10 @@ public class UserServiceImpl implements UserService {
         if (userValidator.registeredEmail(user.getEmail())) {
             throw new BusinessException("Email registered.");
         }
+
+        String password = user.getPassword();
+        String encryptedPassword = userValidator.encryptPassword(password);
+        user.setPassword(encryptedPassword);
 
         userRepository.save(user);
     }

@@ -1,6 +1,7 @@
 package com.fbm.user.service;
 
 import com.fbm.user.model.User;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 public interface UserService {
@@ -10,7 +11,7 @@ public interface UserService {
 
     User findByEmail(String email);
 
-    void insert(User user);
+    void insert(User user) throws NoSuchAlgorithmException;
 
     void update(Long id, User user);
 

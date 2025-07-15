@@ -3,6 +3,7 @@ package com.fbm.user.controller;
 import com.fbm.user.model.User;
 import com.fbm.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,7 +32,7 @@ public class UserController {
 
     @Operation(summary = "Insert User")
     @PostMapping
-    public ResponseEntity<User> insertUser(@RequestBody User user) {
+    public ResponseEntity<User> insertUser(@RequestBody User user) throws NoSuchAlgorithmException {
         userService.insert(user);
         return ResponseEntity.ok(user);
     }
