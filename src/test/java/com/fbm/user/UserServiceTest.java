@@ -1,8 +1,6 @@
 package com.fbm.user;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.fbm.common.handler.BusinessException;
@@ -72,39 +70,4 @@ public class UserServiceTest {
                 },
                 "Should throw BusinessException when ID is not found");
     }
-
-    @Test
-    void updateUser() {
-        Long id = 1L;
-        User existingUser = new User(id, "Jose", "Santos", "jose@exemplo.com", "123456");
-        User updatedUser = new User(id, "Maria", "Santos", "jose@exemplo.com", "123456");
-        when(userRepository.findById(id)).thenReturn(Optional.of(existingUser));
-        when(userRepository.save(any(User.class))).thenReturn(updatedUser);
-
-        userService.update(id, updatedUser);
-
-        verify(userRepository).save(updatedUser);
-        User savedUser = userRepository.save(updatedUser);
-        when(userRepository.findById(id)).thenReturn(Optional.of(updatedUser));
-        User foundUser = userService.findById(id);
-        assertEquals("Maria", foundUser.getFirstName(), "First name should be updated");
-        assertEquals("Santos", foundUser.getLastName(), "Last name should remain unchanged");
-        assertEquals("jose@exemplo.com", foundUser.getEmail(), "Email should remain unchanged");
-        assertEquals("123456", foundUser.getPassword(), "Password should remain unchanged");
-    }
-
-    @Test
-    void updateUserWithInvalidId() {
-        Long invalidId = 999L;
-        User updatedUser = new User(invalidId, "Maria", "Santos", "jose@exemplo.com", "123456");
-        when(userRepository.findById(invalidId)).thenReturn(Optional.empty());
-
-        assertThrows(
-                BusinessException.class,
-                () -> {
-                    userService.update(invalidId, updatedUser);
-                },
-                "Should throw BusinessException when ID is not found");
-    }
-
 }

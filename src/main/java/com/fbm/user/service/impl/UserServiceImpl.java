@@ -4,10 +4,9 @@ import com.fbm.common.handler.BusinessException;
 import com.fbm.user.model.User;
 import com.fbm.user.repository.UserRepository;
 import com.fbm.user.service.UserService;
+import com.fbm.user.service.UserValidator;
 import java.util.List;
 import java.util.Optional;
-
-import com.fbm.user.service.UserValidator;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -33,7 +32,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findById(Long id) {
         Optional<User> user = userRepository.findById(id);
-        return user.orElseThrow(() -> new BusinessException("Id not found"));
+        return user.orElseThrow(() -> new BusinessException("Id not found."));
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        User user = userRepository.findByUserEmail(email);
+        if (user == null) {
+            throw new BusinessException("No users found with this email.");
+        }
+        return user;
     }
 
     @Override
@@ -42,24 +50,36 @@ public class UserServiceImpl implements UserService {
                 || user.getLastName() == null
                 || user.getEmail() == null
                 || user.getPassword() == null) {
-            throw new BusinessException("You must fill in all fields");
-        } else if (userValidator.isValidEmail(user.getEmail())) {
-            throw new BusinessException("Invalid email");
-        } else {
-            userRepository.save(user);
+            throw new BusinessException("You must fill in all fields.");
         }
+
+        if (userValidator.isEmailValid(user.getEmail())) {
+            throw new BusinessException("Invalid email.");
+        }
+
+        if (userValidator.registeredEmail(user.getEmail())) {
+            throw new BusinessException("Email registered.");
+        }
+
+        userRepository.save(user);
     }
 
     @Override
     public void update(Long id, User user) {
         Optional<User> userDb = userRepository.findById(id);
         if (userDb.isEmpty()) {
-            throw new BusinessException("Id not found");
-        } else if (userValidator.isValidEmail(user.getEmail())) {
-            throw new BusinessException("Invalid email");
-        } else {
-            userRepository.save(user);
+            throw new BusinessException("Id not found.");
         }
+
+        if (userValidator.isEmailValid(user.getEmail())) {
+            throw new BusinessException("Invalid email.");
+        }
+
+        if (userValidator.isNewEmail(id, user)) {
+            throw new BusinessException("The email is different. Insert current email.");
+        }
+
+        userRepository.save(user);
     }
 
     @Override
