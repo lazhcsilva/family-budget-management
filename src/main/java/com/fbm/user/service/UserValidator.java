@@ -39,10 +39,9 @@ public class UserValidator {
     }
 
     public String encryptPassword(String password) throws NoSuchAlgorithmException {
-        String encryptedPassword = "";
+        String encryptedPassword;
         MessageDigest algorithm = MessageDigest.getInstance("SHA-256");
         byte[] messageDigest = algorithm.digest(password.getBytes(StandardCharsets.UTF_8));
-
         StringBuilder hexString = new StringBuilder();
 
         for (byte b : messageDigest) {
@@ -52,5 +51,10 @@ public class UserValidator {
         encryptedPassword = hexString.toString();
         algorithm.reset();
         return encryptedPassword;
+    }
+
+    public boolean validatePassword(String password) {
+        String regex = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d).{8,}$";
+        return Pattern.compile(regex).matcher(password).matches();
     }
 }

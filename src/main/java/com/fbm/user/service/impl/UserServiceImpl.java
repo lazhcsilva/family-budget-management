@@ -62,8 +62,11 @@ public class UserServiceImpl implements UserService {
             throw new BusinessException("Email registered.");
         }
 
-        String password = user.getPassword();
-        String encryptedPassword = userValidator.encryptPassword(password);
+        if (!userValidator.validatePassword(user.getPassword())) {
+            throw new BusinessException("Password invalid. You need insert a valid password.");
+        }
+
+        String encryptedPassword = userValidator.encryptPassword(user.getPassword());
         user.setPassword(encryptedPassword);
 
         userRepository.save(user);
