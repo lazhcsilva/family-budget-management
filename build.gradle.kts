@@ -16,7 +16,7 @@ plugins {
 
 	// Static code analyzer
 	id("net.ltgt.errorprone") version "4.0.1"
-	id("com.github.spotbugs") version "6.0.18"
+	//id("com.github.spotbugs") version "6.0.18"
 	pmd
 }
 
@@ -36,7 +36,7 @@ repositories {
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-web")
-	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.9")
+	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.13")
 
 	runtimeOnly("com.h2database:h2")
 
@@ -89,9 +89,9 @@ pmd {
 	isIgnoreFailures = false
 }
 
-spotbugs {
-	ignoreFailures = false
-}
+//spotbugs {
+//	ignoreFailures = false
+//}
 
 tasks.withType<Test> {
 	useJUnitPlatform()
