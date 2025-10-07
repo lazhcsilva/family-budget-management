@@ -5,11 +5,10 @@ import com.fbm.user.model.User;
 import com.fbm.user.repository.UserRepository;
 import com.fbm.user.service.UserService;
 import com.fbm.user.service.UserValidator;
-import org.springframework.stereotype.Service;
-
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.stereotype.Service;
 
 @Service
 public class UserServiceImpl implements UserService {
